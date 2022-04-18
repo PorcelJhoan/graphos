@@ -1,6 +1,7 @@
 from __future__ import division
 from grefo.Clases import *
 from grefo.asignación import *
+from grefo.noroeste import *
 from tkinter.filedialog import *
 from tkinter import messagebox
 from tkinter import *
@@ -16,6 +17,9 @@ Ventana.title("Mapa de Rutas")
 bg = PhotoImage(file="WhatsApp Image 2022-04-10 at 10.27.21 PM.png")
 Ventana.iconbitmap('bola.ico')
 
+scrollbar = Scrollbar(Ventana)
+scrollbar.pack(side="right", fill="y")
+scrollbar.config(command=Ventana)
 canvas = Canvas(Ventana, width=1200, height=650, cursor="tcross")#taget
 canvas.create_image(150,50,image=bg,anchor="nw")
 canvas.pack(fill=BOTH, expand=YES)
@@ -49,6 +53,27 @@ def asignacion():
     print('min cost = ', ass_by_Hun.min_cost)
     print('best solution = ', ass_by_Hun.best_solution)
 
+
+def noroeste():
+    info = Toplevel(width=107*len(extraernombre()),height=37*len(extraernombre()))
+
+    info.title("Informacion del Punto")
+    for r in range(0, len(extraernombre())):
+        for c in range(0, len(extraernombre())):
+            cell = Entry(info,bg = "red")
+            cell.place(x=(0+50*c), y=(0+26*r), width=50, height=26)
+            cell.insert(END,genmatriz()[r][c])
+
+
+  #  print("Metodo de la esquina noroeste, equipo 1")
+   # origenes = getOrigenes()
+    #destinos = getDestinos()
+    #valores = getValores(origenes, destinos)
+    #oferta = getOferta(origenes)
+    #demanda = getDemandas(destinos)
+    #imprimirValores(origenes, destinos, valores, oferta, demanda)
+    #res = esquinaNoroeste(origenes, destinos, valores, oferta, demanda)
+    #imprimirResultados(res)
 
 #Generar matriz
 
@@ -678,8 +703,8 @@ menubar.add_separator()
 menubar.add_command(label="Generar Matriz", command=genmatriz)
 menubar.add_separator()
 
-#menubar.add_command(label="Eliminar Camino", command=clickeliminara)
-#menubar.add_separator()
+menubar.add_command(label="NOROESTE", command=noroeste)
+menubar.add_separator()
 #menubar.add_command(label="Rutas Mas Cortas", command=clickdijkstra)
 #menubar.add_separator()
 #menubar.add_command(label="Rutas Menos Peligrosas", command=clickdijkstrapeligro)
