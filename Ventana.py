@@ -55,25 +55,14 @@ def asignacion():
 
 
 def noroeste():
-    info = Toplevel(width=107*len(extraernombre()),height=37*len(extraernombre()))
-
-    info.title("Informacion del Punto")
-    for r in range(0, len(extraernombre())):
-        for c in range(0, len(extraernombre())):
-            cell = Entry(info,bg = "red")
-            cell.place(x=(0+50*c), y=(0+26*r), width=50, height=26)
-            cell.insert(END,genmatriz()[r][c])
-
-
-  #  print("Metodo de la esquina noroeste, equipo 1")
-   # origenes = getOrigenes()
-    #destinos = getDestinos()
-    #valores = getValores(origenes, destinos)
-    #oferta = getOferta(origenes)
-    #demanda = getDemandas(destinos)
-    #imprimirValores(origenes, destinos, valores, oferta, demanda)
-    #res = esquinaNoroeste(origenes, destinos, valores, oferta, demanda)
-    #imprimirResultados(res)
+    print("Metodo de la esquina noroeste, equipo 1")
+    origenes = len(extraernombre())
+    destinos = len(extraernombre())
+    oferta = getOferta(origenes)
+    demanda = getDemandas(destinos)
+    imprimirValores(origenes, destinos, genmatriz(), oferta, demanda)
+    res = esquinaNoroeste(origenes, destinos, genmatriz(), oferta, demanda)
+    imprimirResultados(res)
 
 #Generar matriz
 
@@ -86,6 +75,38 @@ def extraernombre():
     print(vec)
     return vec
 
+def genmatrices():
+    info = Toplevel(width=107 * len(extraernombre()), height=37 * len(extraernombre()))
+
+    info.title("MATRIZ")
+    for i in range(0, len(extraernombre())):
+        cell = Entry(info, bg="#069A8E")
+        cell.place(x=(0 + 50 * (i + 1)), y=0, width=50, height=26)
+        cell.insert(END, extraernombre()[i])
+
+    cell = Entry(info, bg="#069A8E")
+    cell.place(x=(0 + 50 * (len(extraernombre())+ 1)), y=0, width=50, height=26)
+    cell.insert(END, "Total")
+    total =0
+    tot=[]
+    for r in range(0, len(extraernombre())):
+        cell = Entry(info, bg="#069A8E")
+        cell.place(x=0 , y=(0 + 26 * (r+1)), width=50, height=26)
+        cell.insert(END, extraernombre()[r])
+        total= 0
+        for c in range(0, len(extraernombre())):
+            cell = Entry(info, bg="#A1E3D8")
+            cell.place(x=(0 + 50 * (c+1)), y=(0 + 26 * (r+1)), width=50, height=26)
+            cell.insert(END, genmatriz()[r][c])
+            total=total + genmatriz()[r][c]
+            tot.append(genmatriz()[c][r])
+        cell = Entry(info, bg="#F7FF93")
+        cell.place(x=(0 + 50 * (len(extraernombre()) + 1)), y=(0 + 26 * (r + 1)), width=50, height=26)
+        cell.insert(END, total)
+    for i in range(0, len(extraernombre())):
+        cell = Entry(info, bg="#F7FF93")
+        cell.place(x=(0 + 50 * (i + 1)), y=+ 26 * (len(extraernombre()) + 1), width=50, height=26)
+        cell.insert(END, tot[i])
 def genmatriz():
     fila=[]
     matriz= []
@@ -105,6 +126,7 @@ def genmatriz():
                 fila.append(0)
     matriz = np.array(fila).reshape(len(vec),len(vec))
     print("matriz",(matriz))
+
     return matriz
 # Informacion del vertice
 def click(event):
@@ -700,7 +722,7 @@ menubar = Menu(Ventana)
 
 menubar.add_command(label="Relacionar", command=clickrelacion)
 menubar.add_separator()
-menubar.add_command(label="Generar Matriz", command=genmatriz)
+menubar.add_command(label="Generar Matriz", command=genmatrices)
 menubar.add_separator()
 
 menubar.add_command(label="NOROESTE", command=noroeste)
